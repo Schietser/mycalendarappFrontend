@@ -27,7 +27,10 @@ export class SchedulesListComponent implements OnInit {
   constructor(
     private router: Router,
     private modal: NgbModal,
-    private scheduleService: ScheduleService) { }
+    private scheduleService: ScheduleService) {
+      this.events.push({start: new Date(), title: 'Schedule', id: 1})
+      this.events.push({start: new Date(), title: 'test', id: '2'})
+     }
 
   ngOnInit(): void {
     this.loadSchedules();
@@ -42,6 +45,7 @@ export class SchedulesListComponent implements OnInit {
   }
 
   onDayClick({ date, events }: MonthViewDay) {
+     this.router.navigate(['/schedules/overview']);
     if (isSameMonth(date, this.viewDate)) {
       if (events.length === 0 || (isSameDay(this.viewDate, date) && this.activeDayIsOpen)) {
         this.activeDayIsOpen = false;
@@ -54,8 +58,9 @@ export class SchedulesListComponent implements OnInit {
   }
 
   onEventClick(event: CalendarEvent) {
-    this.modalData = { schedule: event.meta };
-    this.modal.open(this.modalContent, { size: 'md' });
+    this.router.navigate([`/schedules/edit/${event.id}`]);
+    /* this.modalData = { schedule: event.meta };
+    this.modal.open(this.modalContent, { size: 'md' }); */
   }
 
   onSegmentClick(date: Date) {

@@ -21,8 +21,7 @@ export class SchedulesNewComponent implements OnInit {
     date: [null, Validators.required],
     initTime: [null, Validators.required],
     endTime: [null, Validators.required],
-    description: [null],
-    expertsId: [null, Validators.required]
+    description: [null]
   }, { validators: this.endTimeValidator });
 
   constructor(
@@ -57,6 +56,8 @@ export class SchedulesNewComponent implements OnInit {
         timeError: 'The end hour must be greater than initial hour.'
       }
     }
+
+
 
     return null;
   }

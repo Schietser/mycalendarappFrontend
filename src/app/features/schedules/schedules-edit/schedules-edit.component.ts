@@ -20,8 +20,7 @@ export class SchedulesEditComponent implements OnInit {
     date: [null, Validators.required],
     initTime: [null, Validators.required],
     endTime: [null, Validators.required],
-    description: [null],
-    expertsId: [null, Validators.required]
+    description: [null]
   });
 
   experts: Observable<Expert[]> = this.expertService.findAll();
@@ -36,7 +35,7 @@ export class SchedulesEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.scheduleId = this.activatedRoute.snapshot.params['id'] as number;
-    this.loadSchedule();
+    this.loadSchedule();    
   }
 
   onSubmit() {
@@ -46,14 +45,14 @@ export class SchedulesEditComponent implements OnInit {
   }
 
   private loadSchedule() {
+    console.log('Loading schedule');
     this.scheduleService.findById(this.scheduleId).subscribe(schedule => {
       this.scheduleForm.patchValue({
         title: schedule.title,
         date: schedule.date,
         initTime: schedule.initTime,
         endTime: schedule.endTime,
-        description: schedule.description,
-        expertsId: schedule.expertsId
+        description: schedule.description
       });
     });
   }

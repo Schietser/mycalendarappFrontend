@@ -5,5 +5,4 @@ export interface Schedule {
     initTime: string;
     endTime: string;
     description: string;
-    expertsId: number;
 }

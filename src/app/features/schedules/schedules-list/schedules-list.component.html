@@ -11,14 +11,14 @@
 
     <div class="col-md-4">
         <div class="btn-toolbar justify-content-center justify-content-sm-end" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group me-3">
+            <!-- <div class="btn-group me-3">
                 <button type="button" class="btn" (click)="setView(CalendarView.Month)" [ngClass]="view === CalendarView.Month ? ' btn-purple' : ' btn-outline-purple'">
                     Month
                 </button>
                 <button type="button" class="btn" (click)="setView(CalendarView.Week)" [ngClass]="view === CalendarView.Week ? ' btn-purple' : ' btn-outline-purple'">
                     Week
                 </button>
-            </div>
+            </div> -->
 
             <div class="btn-group">
                 <button type="button" class="btn btn-outline-purple" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeActiveDay()">
@@ -36,6 +36,7 @@
 </div>
 
 <div [ngSwitch]="view">
+
     <mwl-calendar-month-view
         *ngSwitchCase="CalendarView.Month"
         [viewDate]="viewDate"
@@ -45,7 +46,7 @@
         (eventClicked)="onEventClick($event.event)">
     </mwl-calendar-month-view>
     
-    <mwl-calendar-week-view
+    <!-- <mwl-calendar-week-view
         *ngSwitchCase="CalendarView.Week"
         [viewDate]="viewDate"
         [events]="events"
@@ -54,7 +55,7 @@
         (beforeViewRender)="onBeforeRenderWeek($event)"
         (hourSegmentClicked)="onSegmentClick($event.date)"
         (eventClicked)="onEventClick($event.event)">
-    </mwl-calendar-week-view>
+    </mwl-calendar-week-view> -->
 </div>
 
 <ng-template #modalContent let-modal>
