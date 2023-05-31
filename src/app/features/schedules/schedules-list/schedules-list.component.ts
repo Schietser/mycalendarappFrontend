@@ -29,7 +29,7 @@ export class SchedulesListComponent implements OnInit {
     private modal: NgbModal,
     private scheduleService: ScheduleService) {
       this.events.push({start: new Date(), title: 'Schedule', id: 1})
-      this.events.push({id : 2, title : 'Dentist appointment', start : new Date('2023-05-30')})
+      this.events.push({start: new Date(), title: 'test', id: '2'})
      }
 
   ngOnInit(): void {
