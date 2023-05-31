@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Schedule } from './schedule';
+import { Observable, of } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,10 @@ export class ScheduleService {
   }
 
   findById(id: number) {
-    return this.http.get<Schedule>(`${this.apiUrl}/${id}`);
+    console.log("findById")
+    var schedule : Schedule={id : 2, title: 'title', description: 'description', date: new Date("2023-05-31"), initTime: '09:30', endTime: '10:30'};
+    return of(schedule)
+    // return this.http.get<Schedule>(`${this.apiUrl}/${id}`);
   }
 
   findAll() {

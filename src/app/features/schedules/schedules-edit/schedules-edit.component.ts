@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Expert } from '../../experts/expert';
 import { ExpertService } from '../../experts/expert.service';
 import { ScheduleService } from '../schedule.service';
+import { Schedule } from '../schedule';
 
 @Component({
   selector: 'app-schedules-edit',
@@ -13,7 +12,8 @@ import { ScheduleService } from '../schedule.service';
 })
 export class SchedulesEditComponent implements OnInit {
 
-  scheduleId!: number;
+  scheduleId! : number;
+  schedule : Schedule={id : 2, title: 'title', description: 'description', date: new Date("2023-05-31"), initTime: '09:30', endTime: '10:30'};
 
   scheduleForm: FormGroup = this.formBuilder.group({
     title: [null, Validators.required],
@@ -22,8 +22,6 @@ export class SchedulesEditComponent implements OnInit {
     endTime: [null, Validators.required],
     description: [null]
   });
-
-  experts: Observable<Expert[]> = this.expertService.findAll();
 
   constructor(
     private router: Router,
@@ -35,7 +33,7 @@ export class SchedulesEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.scheduleId = this.activatedRoute.snapshot.params['id'] as number;
-    this.loadSchedule();    
+    this.loadSchedule();
   }
 
   onSubmit() {
@@ -44,7 +42,7 @@ export class SchedulesEditComponent implements OnInit {
     });
   }
 
-  private loadSchedule() {
+  private loadSchedule() : any{
     console.log('Loading schedule');
     this.scheduleService.findById(this.scheduleId).subscribe(schedule => {
       this.scheduleForm.patchValue({
@@ -54,6 +52,11 @@ export class SchedulesEditComponent implements OnInit {
         endTime: schedule.endTime,
         description: schedule.description
       });
+
+      console.log(this.schedule);
+
+      return schedule;
+
     });
   }
 
