@@ -32,6 +32,18 @@ export class SchedulesOverviewComponent implements OnInit {
   }
     
   );
+
+  this.listItems.push({
+    id : 2,
+    title : 'Dentist appointment',
+    date : new Date('2023-05-30'),
+    initTime : '11:30',
+    endTime : '12:00',
+    description : 'Dentist appointment at 11:30 to fill cavities'
+
+  })
+
+  console.log(this.listItems);
     
     return this.listItems;
   }

@@ -1,0 +1,28 @@
+.noEventsToShow {
+    text-align: center;
+    font-size: x-large;
+}
+
+.backbtn {
+    float: left;
+    width: 15%;
+}
+
+td {
+    color: white !important;
+}
+
+td {
+    padding: 8px;
+}
+
+tr {
+    padding: 10px;
+}
+
+table textarea {
+    box-sizing: border-box;
+    background-color: #212529;
+    color: white;
+    width: 100%;
+  }

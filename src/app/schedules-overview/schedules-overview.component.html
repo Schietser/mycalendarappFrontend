@@ -1,15 +1,50 @@
 <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Title</th>
-        <th scope="col">Date</th>
-        <th scope="col">Starting Time</th>
-        <th scope="col">Ending Time</th>
-        <th scope="col">Description</th>
-      </tr>
-    </thead>
-    <tbody *ngIf="listItems.length">
-      <tr *ngFor="let doc of listItems; let i = index">
-      </tr>
-    </tbody>
-  </table>
+  <tbody *ngIf="listItems.length">
+    <div *ngFor="let doc of listItems; let i = index">
+    <tr>
+      <td class="title">Task 1</td>
+      <td class="fullDay">Full Day</td>
+      <td></td>
+      <td>
+        <button type="button"  >
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td class="startDate">Start date</td>
+      <td>{{doc.startDate}}</td>
+      <td class="startTime">Start time</td>
+      <td>{{doc.initTime}}</td>
+    </tr>
+    <tr>
+      <td class="title">End date</td>
+      <td>{{doc.startDate}}</td>
+      <td class="title">End time</td>
+      <td>{{doc.endTime}}</td>
+    </tr>
+    <tr>
+      <td class="title">Title</td>
+      <td colspan="3">{{doc.title}}</td>
+    </tr>
+    <tr>
+      <td class="title" colspan="4">Discription</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <textarea readonly> {{doc.description}} </textarea>
+      </td>
+    </tr>
+  </div>
+  </tbody>
+</table>
+
+<p *ngIf="listItems.length === 0" class="noEventsToShow">
+  No event(s) on this date
+</p>
+
+<p class = "backbtn">
+  <a routerLink="/schedules" class="btn btn-outline-purple w-100">
+    Back
+</a>
+</p>
