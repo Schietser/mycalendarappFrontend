@@ -24,7 +24,7 @@ export class ScheduleService {
 
   findById(id: number) {
     console.log("findById")
-    var schedule : Schedule={id : 2, title: 'title', description: 'description', startDate: new Date("2023-05-31"), endDate: new Date("2023-05-31"), initTime: '09:30', endTime: '10:30'};
+    var schedule : Schedule={id : 2, title: 'title', description: 'description', startDate: new Date("2023-05-31"), endDate: new Date("2023-05-31"), startTime: '09:30', endTime: '10:30', fullDay: false};
     return of(schedule)
     // return this.http.get<Schedule>(`${this.apiUrl}/${id}`);
   }

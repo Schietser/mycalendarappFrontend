@@ -19,7 +19,7 @@ export class SchedulesNewComponent implements OnInit {
   scheduleForm: FormGroup = this.formBuilder.group({
     title: [null, Validators.required],
     date: [null, Validators.required],
-    initTime: [null, Validators.required],
+    startTime: [null, Validators.required],
     endTime: [null, Validators.required],
     description: [null]
   }, { validators: this.endTimeValidator });
@@ -34,9 +34,9 @@ export class SchedulesNewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const { date, initTime } = this.activatedRoute.snapshot.queryParams;
-    if (date && initTime) {
-      this.scheduleForm.patchValue({ date, initTime });
+    const { date, startTime } = this.activatedRoute.snapshot.queryParams;
+    if (date && startTime) {
+      this.scheduleForm.patchValue({ date, startTime });
     }
   }
 
@@ -48,10 +48,10 @@ export class SchedulesNewComponent implements OnInit {
   }
 
   private endTimeValidator(control: AbstractControl) {
-    const initTime = parse(control.get('initTime')?.value, 'HH:mm', Date.now());
+    const startTime = parse(control.get('startTime')?.value, 'HH:mm', Date.now());
     const endTime = parse(control.get('endTime')?.value, 'HH:mm', Date.now());
 
-    if (initTime >= endTime) {
+    if (startTime >= endTime) {
       return {
         timeError: 'The end hour must be greater than initial hour.'
       }

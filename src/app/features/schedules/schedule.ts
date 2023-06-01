@@ -1,9 +1,14 @@
 export interface Schedule {
     id: number;
+
     title: string;
+    description?: string;
+
     startDate: Date;
-    endDate: Date;
-    initTime: string;
-    endTime: string;
-    description: string;
+    endDate?: Date;
+
+    startTime?: string;
+    endTime?: string;
+
+    fullDay: boolean;
 }

@@ -1,3 +1,9 @@
+tbody {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
 .noEventsToShow {
     text-align: center;
     font-size: x-large;
@@ -27,12 +33,11 @@ table textarea {
     width: 100%;
   }
 
-  .centerinfo {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: normal;
-    align-items: normal;
-    align-content: normal;
+  .fullDay {
+    background-color: #8257e6;
+    text-align: center;
+  }
 
+  .TasksLayout {
+    flex: ;
   }

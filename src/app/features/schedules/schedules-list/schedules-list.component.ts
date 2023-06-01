@@ -28,7 +28,7 @@ export class SchedulesListComponent implements OnInit {
     private router: Router,
     private modal: NgbModal,
     private scheduleService: ScheduleService) {
-      this.events.push({start: new Date(), title: 'Schedule', id: 1})
+      this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1})
       this.events.push({id : 2, title : 'Dentist appointment', start : new Date('2023-05-30')})
      }
 
@@ -44,8 +44,11 @@ export class SchedulesListComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  onDayClick({ date, events }: MonthViewDay) {
-     this.router.navigate(['/schedules/overview']);
+  onDayClick({ date , events }: MonthViewDay) {
+
+    console.log("OnDayClick "+date)
+    
+     this.router.navigate([`/schedules/overview/${format(date, 'dd-MM-yyyy')}`]);
     if (isSameMonth(date, this.viewDate)) {
       if (events.length === 0 || (isSameDay(this.viewDate, date) && this.activeDayIsOpen)) {
         this.activeDayIsOpen = false;
@@ -68,7 +71,7 @@ export class SchedulesListComponent implements OnInit {
       this.router.navigate(['schedules/new'], {
         queryParams: {
           date: format(date, 'yyyy-MM-dd'),
-          initTime: format(date, 'HH:mm')
+          startTime: format(date, 'HH:mm')
         }
       });
     }
@@ -97,7 +100,8 @@ export class SchedulesListComponent implements OnInit {
     events.push({
       label: '<i class="fa-solid fa-trash-can mx-1 text-purple"></i>',
       onClick: (): void => {
-        this.scheduleService.delete(schedule.id).subscribe(() => {
+        
+        this.scheduleService.delete(schedule.id?schedule.id:-1).subscribe(() => {
           this.loadSchedules();
           this.closeActiveDay();
         });
@@ -111,8 +115,8 @@ export class SchedulesListComponent implements OnInit {
     const parsedDate = schedule.startDate;
     const event: CalendarEvent = {
       title: schedule.title,
-      start: parse(schedule.initTime, 'HH:mm', parsedDate),
-      end: parse(schedule.endTime, 'HH:mm', parsedDate),
+      start: parse(schedule.startTime?schedule.startTime:"00:00", 'HH:mm', parsedDate),
+      end: parse(schedule.endTime?schedule.endTime:"00:00", 'HH:mm', parsedDate),
       cssClass: 'event-body',
       color: {
         primary: 'var(--purple)',

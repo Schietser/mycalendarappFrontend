@@ -16,7 +16,7 @@ import { SchedulesOverviewComponent } from './schedules-overview/schedules-overv
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    CoreModule
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -66,7 +66,7 @@
 
     <div class="modal-body">
         <p>Data: <span>{{modalData.schedule.startDate | date:'yyyy-MM-dd'}}</span></p>
-        <p>Horário: <span>{{modalData.schedule.initTime}} ~ {{modalData.schedule.endTime}}</span></p>
+        <p>Horário: <span>{{modalData.schedule.startTime}} ~ {{modalData.schedule.endTime}}</span></p>
         <p *ngIf="modalData.schedule.description">Descrição: <span>{{modalData.schedule.description}}</span></p>
     </div>
 </ng-template>

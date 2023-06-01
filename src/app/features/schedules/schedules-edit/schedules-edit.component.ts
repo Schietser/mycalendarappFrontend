@@ -13,12 +13,12 @@ import { Schedule } from '../schedule';
 export class SchedulesEditComponent implements OnInit {
 
   scheduleId! : number;
-  schedule : Schedule={id : 2, title: 'title', description: 'description', startDate: new Date("2023-05-31"), endDate : new Date("2023-05-31"),  initTime: '09:30', endTime: '10:30'};
+  schedule : Schedule={id : 2, title: 'title', description: 'description', startDate: new Date("2023-05-31"), endDate : new Date("2023-05-31"),  startTime: '09:30', endTime: '10:30', fullDay: false};
 
   scheduleForm: FormGroup = this.formBuilder.group({
     title: [null, Validators.required],
     date: [null, Validators.required],
-    initTime: [null, Validators.required],
+    startTime: [null, Validators.required],
     endTime: [null, Validators.required],
     description: [null]
   });
@@ -48,7 +48,7 @@ export class SchedulesEditComponent implements OnInit {
       this.scheduleForm.patchValue({
         title: schedule.title,
         date: schedule.startDate,
-        initTime: schedule.initTime,
+        startTime: schedule.startTime,
         endTime: schedule.endTime,
         description: schedule.description
       });
