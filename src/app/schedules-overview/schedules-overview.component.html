@@ -1,8 +1,9 @@
 <table class="table table-striped">
   <tbody *ngIf="listItems.length">
+    <div class="centerinfo">
     <div *ngFor="let doc of listItems; let i = index">
     <tr>
-      <td class="title">Task 1</td>
+      <td class="title"> <strong> Task {{i+1}} </strong></td>
       <td class="fullDay">Full Day</td>
       <td></td>
       <td>
@@ -13,7 +14,7 @@
     </tr>
     <tr>
       <td class="startDate">Start date</td>
-      <td>{{doc.startDate}}</td>
+      <td>{{doc.startDate | date: "dd/MM/yyyy"}}</td>
       <td class="startTime">Start time</td>
       <td>{{doc.initTime}}</td>
     </tr>
@@ -36,6 +37,7 @@
       </td>
     </tr>
   </div>
+</div>
   </tbody>
 </table>
 

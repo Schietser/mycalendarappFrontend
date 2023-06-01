@@ -26,3 +26,13 @@ table textarea {
     color: white;
     width: 100%;
   }
+
+  .centerinfo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: normal;
+    align-items: normal;
+    align-content: normal;
+
+  }

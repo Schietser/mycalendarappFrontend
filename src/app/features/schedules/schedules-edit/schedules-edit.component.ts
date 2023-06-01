@@ -13,7 +13,7 @@ import { Schedule } from '../schedule';
 export class SchedulesEditComponent implements OnInit {
 
   scheduleId! : number;
-  schedule : Schedule={id : 2, title: 'title', description: 'description', date: new Date("2023-05-31"), initTime: '09:30', endTime: '10:30'};
+  schedule : Schedule={id : 2, title: 'title', description: 'description', startDate: new Date("2023-05-31"), endDate : new Date("2023-05-31"),  initTime: '09:30', endTime: '10:30'};
 
   scheduleForm: FormGroup = this.formBuilder.group({
     title: [null, Validators.required],
@@ -47,7 +47,7 @@ export class SchedulesEditComponent implements OnInit {
     this.scheduleService.findById(this.scheduleId).subscribe(schedule => {
       this.scheduleForm.patchValue({
         title: schedule.title,
-        date: schedule.date,
+        date: schedule.startDate,
         initTime: schedule.initTime,
         endTime: schedule.endTime,
         description: schedule.description

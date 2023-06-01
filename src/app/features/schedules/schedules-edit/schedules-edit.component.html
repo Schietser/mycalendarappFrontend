@@ -1,4 +1,4 @@
-<h1 class="text-center mb-4">Edit event</h1>
+<h1 class="text-center mb-4">Edit Task</h1>
 
 <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
 
@@ -10,7 +10,7 @@
     <div class="row mb-3">
         <div class="col-sm-4">
             <label>Date</label>
-            <input type="date" class="form-control" formControlName="date" [(ngModel)]="schedule.date" [ngModel]="schedule.date | date: 'yyyy-MM-dd'" >
+            <input type="date" class="form-control" formControlName="date" [(ngModel)]="schedule.startDate" [ngModel]="schedule.startDate | date: 'yyyy-MM-dd'" >
         </div>
         <div class="col-sm-4">
             <label>Init time</label>

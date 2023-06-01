@@ -108,7 +108,7 @@ export class SchedulesListComponent implements OnInit {
   }
 
   private buildEvent(schedule: Schedule) {
-    const parsedDate = schedule.date;
+    const parsedDate = schedule.startDate;
     const event: CalendarEvent = {
       title: schedule.title,
       start: parse(schedule.initTime, 'HH:mm', parsedDate),
