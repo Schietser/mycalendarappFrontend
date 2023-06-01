@@ -6,12 +6,15 @@ import { Expert } from '../../experts/expert';
 import { ExpertService } from '../../experts/expert.service';
 import { ScheduleService } from '../schedule.service';
 
+
+
 @Component({
   selector: 'app-schedules-edit',
   templateUrl: './schedules-edit.component.html',
   styleUrls: ['./schedules-edit.component.css']
 })
 export class SchedulesEditComponent implements OnInit {
+
 
   scheduleId!: number;
 
@@ -30,14 +33,19 @@ export class SchedulesEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private expertService: ExpertService,
-    private scheduleService: ScheduleService
+    private scheduleService: ScheduleService,
+    
+    
+    
+
   ) { }
 
   ngOnInit(): void {
     this.scheduleId = this.activatedRoute.snapshot.params['id'] as number;
-    this.loadSchedule();    
+    this.loadSchedule();
+   
   }
-
+  
   onSubmit() {
     this.scheduleService.update(this.scheduleId, this.scheduleForm.value).subscribe(() => {
       this.router.navigateByUrl('/schedules');
