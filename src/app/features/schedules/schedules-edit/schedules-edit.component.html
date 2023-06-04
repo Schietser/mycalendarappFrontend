@@ -1,20 +1,20 @@
-<h1 class="text-center mb-4">Edit event</h1>
+<h1 class="text-center mb-4">Edit Task</h1>
 
 <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
 
     <div class="mb-3">
         <label>Title</label>
-        <input type="text" class="form-control" placeholder="Title..." formControlName="title">
+        <input type="text" class="form-control" formControlName="title" placeholder="Title..." [(ngModel)]="schedule.title">
     </div>
 
     <div class="row mb-3">
         <div class="col-sm-4">
             <label>Date</label>
-            <input type="date" class="form-control" formControlName="date">
+            <input type="date" class="form-control" formControlName="date" [(ngModel)]="schedule.startDate" [ngModel]="schedule.startDate | date: 'yyyy-MM-dd'" >
         </div>
         <div class="col-sm-4">
             <label>Init time</label>
-            <input type="time" class="form-control" formControlName="initTime">
+            <input type="time" class="form-control" formControlName="startTime">
         </div>
         <div class="col-sm-4">
             <label>End time</label>
@@ -29,7 +29,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <a routerLink="/schedules" class="btn btn-outline-purple w-100">
+            <a routerLink="/schedules/overview" class="btn btn-outline-purple w-100">
                 Back
             </a>
         </div>

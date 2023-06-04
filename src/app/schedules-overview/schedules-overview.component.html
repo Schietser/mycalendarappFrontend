@@ -1,15 +1,61 @@
+<p class = "backbtn">
+  <a routerLink="/schedules" class="btn btn-outline-purple w-100">
+    Back
+</a>
+</p>
+
 <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Title</th>
-        <th scope="col">Date</th>
-        <th scope="col">Starting Time</th>
-        <th scope="col">Ending Time</th>
-        <th scope="col">Description</th>
-      </tr>
-    </thead>
-    <tbody *ngIf="listItems.length">
-      <tr *ngFor="let doc of listItems; let i = index">
-      </tr>
-    </tbody>
-  </table>
+  <tbody *ngIf="listItems.length">
+    <div class="TasksLayout">
+      <div *ngFor="let doc of listItems; let i = index" class>
+      <div class = "row justify-content-center">
+        <div class="col-auto">
+          <tr>
+            <td class="title"> <strong> Task {{i+1}} </strong></td>
+            <td class="fullDay"><strong>Full Day</strong></td>
+            <td></td>
+            <td>
+              <button type="button" class="edit button" (click)="onEdit(doc)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </td>
+            <td>
+              <button type="button" class="delete button" (click)="onDelete(doc)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="startDate"><strong>Start date</strong></td>
+            <td>{{doc.startDate | date:'dd/MM/yyyy'}}</td>
+            <td class="startTime"><strong>Start time</strong></td>
+            <td>{{doc.startTime}}</td>
+          </tr>
+          <tr>
+            <td class="title"><strong>End date</strong></td>
+            <td>{{doc.endDate | date:'dd/MM/yyyy'}}</td>
+            <td class="title"><strong>End time</strong></td>
+            <td>{{doc.endTime}}</td>
+          </tr>
+          <tr>
+            <td class="title"><strong>Title</strong></td>
+            <td colspan="3">{{doc.title}}</td>
+          </tr>
+          <tr>
+            <td class="title" colspan="4"><strong>Discription</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <textarea readonly> {{doc.description}} </textarea>
+            </td>
+          </tr>
+        </div>
+      </div>
+        </div>
+    </div>
+  </tbody>
+</table>
+
+<p *ngIf="listItems.length === 0" class="noEventsToShow">
+  No event(s) on this date
+</p>

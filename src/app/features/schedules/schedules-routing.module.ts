@@ -13,7 +13,7 @@ const routes: Routes = [
     path: "new",
     component: SchedulesNewComponent
   }, {
-    path: "overview",
+    path: "overview/:day",
     component: SchedulesOverviewComponent
   }, {
     path: "edit/:id",
