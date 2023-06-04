@@ -28,7 +28,7 @@ export class SchedulesEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private expertService: ExpertService,
-    private scheduleService: ScheduleService
+    private scheduleService: ScheduleService,
   ) { }
 
   ngOnInit(): void {

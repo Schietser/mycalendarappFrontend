@@ -5,26 +5,32 @@ tbody {
 }
 
 .noEventsToShow {
-    text-align: center;
-    font-size: x-large;
+  text-align: left;
+  font-size: x-large;
 }
 
 .backbtn {
-    float: left;
-    width: 15%;
+  float: left;
+  width: 15%;
+}
+
+
+td {
+  color: white !important;
+  width: 50%;
 }
 
 td {
-    color: white !important;
+  padding: 8px;
+
 }
 
-td {
-    padding: 8px;
-}
 
 tr {
-    padding: 10px;
+  padding: 8px;
+
 }
+
 
 table textarea {
     box-sizing: border-box;
@@ -39,5 +45,8 @@ table textarea {
   }
 
   .TasksLayout {
-    flex: ;
+    //flex: ;
   }
+td.newligne{
+  border:  1px solid red;
+}
