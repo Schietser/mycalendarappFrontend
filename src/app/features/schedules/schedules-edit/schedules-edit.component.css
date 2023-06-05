@@ -1,3 +1,4 @@
+
 .container {
   display: flex;
   justify-content: flex-start;
@@ -9,11 +10,10 @@
 
 .text {
   color: white;
- font-size: medium;
-margin-left: 1em;
-
- 
+  font-size: medium;
+  margin-left: 1em;
 }
+
 .checkbox{
 width: 26px;
 }

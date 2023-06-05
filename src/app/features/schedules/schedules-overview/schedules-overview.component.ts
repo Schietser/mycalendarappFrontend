@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ScheduleService} from '../features/schedules/schedule.service';
-import {Schedule} from '../features/schedules/schedule';
+import {ScheduleService} from '../schedule.service';
+import {Schedule} from '../schedule';
 import {ActivatedRoute, Router} from '@angular/router';
+import { isThursday } from 'date-fns';
 
 @Component({
   selector: 'app-schedules-overview',
@@ -22,7 +23,6 @@ export class SchedulesOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.day = this.activatedRoute.snapshot.params['day'] as Date;
-
     console.log("Overview date :" + this.day)
     this.showAllSchedules();
   }

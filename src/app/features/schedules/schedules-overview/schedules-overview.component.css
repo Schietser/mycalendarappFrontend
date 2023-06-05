@@ -3,6 +3,7 @@ tbody {
   margin-right: auto;
   text-align: left;
   white-space: nowrap;
+  
 }
 
 .noEventsToShow {
@@ -18,7 +19,6 @@ tbody {
 
 td {
   color: white !important;
-  width: 50%;
 }
 
 td {
@@ -37,7 +37,6 @@ table textarea {
   box-sizing: border-box;
   background-color: #212529;
   color: white;
-  width: 100%;
 }
 
 .fullDay {
@@ -45,10 +44,7 @@ table textarea {
   text-align: center;
 }
 
-.TasksLayout {
-  /*flex:;*/
-}
-
 td.newligne {
   border: 1px solid red;
 }
+
