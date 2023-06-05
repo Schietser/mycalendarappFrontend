@@ -6,7 +6,6 @@ import {MonthViewDay} from 'calendar-utils';
 import {format, isAfter, isBefore, isSameDay, isSameMonth} from 'date-fns';
 import {Schedule} from '../schedule';
 import {ScheduleService} from '../schedule.service';
-import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-schedules-list',
@@ -22,7 +21,7 @@ export class SchedulesListComponent implements OnInit {
   activeDayIsOpen = false;
   view = CalendarView.Month;
   events: CalendarEvent[] = [];
-  refreshCalendar: Subject<void> = new Subject();
+  // refreshCalendar: Subject<void> = new Subject();
   modalData!: { schedule: Schedule };
   eventsCopy: CalendarEvent[] = [];
 
@@ -30,13 +29,13 @@ export class SchedulesListComponent implements OnInit {
     private router: Router,
     private modal: NgbModal,
     private scheduleService: ScheduleService) {
-    this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1})
-    this.events.push({title: 'Dentist appointment', start: new Date('2023-05-30')})
+    this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1, end: new Date('2023-06-04')})
+    this.events.push({title: 'Dentist appointment', start: new Date('2023-05-30'), end: new Date('2023-06-01')})
 
   }
 
   ngOnInit(): void {
-    this.loadSchedules();
+    //this.loadSchedules();
     console.log(this.events)
   }
 
@@ -152,8 +151,10 @@ export class SchedulesListComponent implements OnInit {
           response.map(
             schedule => this.eventsCopy
               .push({
+                id: schedule.id,
                 title: schedule.title,
-                start: this.convertStringToDate(schedule.startDate)
+                start: this.convertStringToDate(schedule.startDate),
+                end: this.convertStringToDate(schedule.endDate ? schedule.endDate : schedule.startDate)
               }));//this.buildEvent(schedule)));
 
           console.log(response);
@@ -161,8 +162,8 @@ export class SchedulesListComponent implements OnInit {
         error: err => console.log('error', err)
       });
 
-    //this.events = this.eventsCopy;
-    this.refreshCalendar.next();
+    this.events = this.eventsCopy.concat(this.events);
+    //this.refreshCalendar.next();
   }
 
 }

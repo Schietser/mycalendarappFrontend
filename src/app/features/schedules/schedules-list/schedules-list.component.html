@@ -39,13 +39,12 @@
 </div>
 
 <div [ngSwitch]="view">
-
+  <!--    [refresh]="refreshCalendar"-->
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
     [events]="events"
     [activeDayIsOpen]="activeDayIsOpen"
-    [refresh]="refreshCalendar"
     (dayClicked)="onDayClick($event.day)"
     (eventClicked)="onEventClick($event.event)">
   </mwl-calendar-month-view>

@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {Schedule} from './schedule';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {format} from "date-fns";
 
 
@@ -45,22 +45,39 @@ export class ScheduleService {
     return this.http.get<Schedule[]>(`${this.apiUrl}/`);
   }
 
-  private convertStringToDate(stringDate: string): Date {
-    let dd, MM, yyyy;
-    [dd, MM, yyyy] = stringDate.split('/');
-    return new Date(yyyy + "-" + MM + "-" + dd + "T12:00:00");// avoid GMT problem for +12 to -12
-  }
+  /* private convertStringToDate(stringDate: string): Date {
+     let dd, MM, yyyy;
+     [dd, MM, yyyy] = stringDate.split('/');
+     return new Date(yyyy + "-" + MM + "-" + dd + "T12:00:00");// avoid GMT problem for +12 to -12
+   }
 
-  findAllByDay(date: Date): Observable<Schedule[]> {
-    let dateString: string = format(date, 'dd/MM/yyyy');
+   private convertDateFormats(hyphenDate: string): string {
+     let dd, MM, yyyy;
+     [dd, MM, yyyy] = hyphenDate.split('-');
+     return dd + "/" + MM + "/" + yyyy;
+   }*/
+
+  findAllByDay(day: Date): Observable<Schedule[]> {
+    let dateString: string = format(day, 'dd/MM/yyyy');
 
     return this.http.get<Schedule[]>(`${this.apiUrl}/day?date=${dateString}`);
   }
 
   findAllByMonthOfYear(date: Date): Observable<Schedule[]> {
     let dateString: string = format(date, 'dd/MM/yyyy');
+    var schedule: Schedule = {
+      id: 2,
+      title: 'title',
+      description: 'description',
+      startDate: '15/06/2023',
+      endDate: '10/06/2023',
+      startTime: '09:30',
+      endTime: '10:30',
+      fullDay: false
+    };
+    return of([schedule]);
 
-    return this.http.get<Schedule[]>(`${this.apiUrl}/month-of-year?date=${dateString}`);
+    //return this.http.get<Schedule[]>(`${this.apiUrl}/month-of-year?date=${dateString}`);
   }
 
   delete(id: number) {

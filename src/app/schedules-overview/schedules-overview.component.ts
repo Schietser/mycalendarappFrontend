@@ -20,8 +20,14 @@ export class SchedulesOverviewComponent implements OnInit {
   ) {
   }
 
+  private convertStringToDate(stringDate: string): Date {
+    let dd, MM, yyyy;
+    [dd, MM, yyyy] = stringDate.split('-');
+    return new Date(yyyy + "-" + MM + "-" + dd + "T12:00:00");// avoid GMT problem for +12 to -12
+  }
+
   ngOnInit(): void {
-    this.day = this.activatedRoute.snapshot.params['day'] as Date;
+    this.day = this.convertStringToDate(this.activatedRoute.snapshot.params['day'] as string);
 
     console.log("Overview date :" + this.day)
     this.showAllSchedules();
@@ -39,15 +45,14 @@ export class SchedulesOverviewComponent implements OnInit {
   private showAllSchedules() {
 
     console.log('show all schedules');
-    /*this.scheduleService.findAllByDay(this.day).subscribe(
-      (data: Schedule[]) => {
+    this.scheduleService.findAllByDay(this.day).subscribe({
+      next: (data: Schedule[]) => {
         this.tasks = data;
       },
-      (error: Error) => {
+      error: (error: Error) => {
         console.log(error);
       }
-    );*/
-
+    });
 
     this.tasks.push({
       id: 2,
