@@ -14,29 +14,37 @@
   <div class="row mb-3">
     <div class="col-sm-4">
       <label class="form-label">Start date</label>
-      <input type="date" class="form-control" formControlName="date" />
+      <input type="date" class="form-control" formControlName="startDate"/>
     </div>
+
     <div class="col-sm-4">
       <label class="form-label">Start time</label>
-      <input type="time" class="form-control" formControlName="initTime" />
+      <input type="time" class="form-control" formControlName="startTime"/>
+    </div>
 
+    <div class="col-sm-4">
+      <label class="container">
+        <input type="checkbox" class="checkbox" formControlName="fullDay">
+        <div class="checkmark"></div>
+        <div class="text">Full day</div>
+      </label>
     </div>
 
     <div class="row mb-3"></div>
 
     <div class="col-sm-4">
       <label class="form-label">End date</label>
-      <input type="date" class="form-control" formControlName="date" />
+      <input type="date" class="form-control" formControlName="endDate"/>
 
 
     </div>
     <div class="col-sm-4">
       <label class="form-label">End time</label>
-      <input type="time" class="form-control" formControlName="endTime" />
+      <input type="time" class="form-control" formControlName="endTime"/>
       <small
         class="text-danger"
         *ngIf="scheduleForm.errors?.['timeError']"
-        >{{scheduleForm.errors?.['timeError']}}</small
+      >{{scheduleForm.errors?.['timeError']}}</small
       >
     </div>
   </div>

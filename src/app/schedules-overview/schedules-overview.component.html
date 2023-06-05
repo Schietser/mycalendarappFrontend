@@ -1,61 +1,76 @@
-<p class = "backbtn">
+<p class="backbtn">
   <a routerLink="/schedules" class="btn btn-outline-purple w-100">
     Back
-</a>
+  </a>
 </p>
 
 <table class="table table-striped">
-  <tbody *ngIf="listItems.length">
-    <div class="TasksLayout">
-      <div *ngFor="let doc of listItems; let i = index" class>
-      <div class = "row justify-content-center">
+  <tbody *ngIf="tasks.length">
+  <div class="TasksLayout">
+    <div *ngFor="let task of tasks; let i = index">
+      <div class="row justify-content-center">
         <div class="col-auto">
           <tr>
-            <td class="title"> <strong> Task {{i+1}} </strong></td>
-            <td class="fullDay"><strong>Full Day</strong></td>
+            <td class="title align-middle text-center"><strong> Task {{i + 1}} </strong></td>
+            <td *ngIf="task.fullDay;else hideFullDay" class="fullDay align-middle text-center"><strong>Full Day</strong>
+            </td>
+            <ng-template #hideFullDay>
+              <td></td>
+            </ng-template>
             <td></td>
             <td>
-              <button type="button" class="edit button" (click)="onEdit(doc)">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </button>
+              <!--<button type="button" class="edit button" (click)="onEdit(doc)">
+                //<i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-pencil mx-1 text-purple"></i>
+              </button>-->
+              <a class="btn btn-outline-purple" (click)="onEdit(task)">
+                <i class="fa-solid fa-pencil"></i>
+              </a>
             </td>
             <td>
-              <button type="button" class="delete button" (click)="onDelete(doc)">
+
+              <!--<button type="button" class="delete button" (click)="onDelete(doc)">
                 <i class="fa-solid fa-trash"></i>
-              </button>
+              </button>-->
+
+              <a class="btn btn-outline-purple" (click)="onDelete(task)">
+                <i class="fa-solid fa-trash"></i>
+              </a>
             </td>
           </tr>
           <tr>
             <td class="startDate"><strong>Start date</strong></td>
-            <td>{{doc.startDate | date:'dd/MM/yyyy'}}</td>
+            <!--            <td>{{task.startDate | date:'dd/MM/yyyy'}}</td>-->
+            <td>{{task.startDate}}</td>
             <td class="startTime"><strong>Start time</strong></td>
-            <td>{{doc.startTime}}</td>
+            <td>{{task.startTime}}</td>
           </tr>
           <tr>
             <td class="title"><strong>End date</strong></td>
-            <td>{{doc.endDate | date:'dd/MM/yyyy'}}</td>
+            <!--            <td>{{task.endDate | date:'dd/MM/yyyy'}}</td>-->
+            <td>{{task.endDate}}</td>
             <td class="title"><strong>End time</strong></td>
-            <td>{{doc.endTime}}</td>
+            <td>{{task.endTime}}</td>
           </tr>
           <tr>
             <td class="title"><strong>Title</strong></td>
-            <td colspan="3">{{doc.title}}</td>
+            <td colspan="3">{{task.title}}</td>
           </tr>
           <tr>
-            <td class="title" colspan="4"><strong>Discription</strong></td>
+            <td class="title" colspan="4"><strong>Description</strong></td>
           </tr>
           <tr>
             <td colspan="4">
-              <textarea readonly> {{doc.description}} </textarea>
+              <textarea readonly> {{task.description}} </textarea>
             </td>
           </tr>
         </div>
       </div>
-        </div>
     </div>
+  </div>
   </tbody>
 </table>
 
-<p *ngIf="listItems.length === 0" class="noEventsToShow">
+<p *ngIf="tasks.length === 0" class="noEventsToShow">
   No event(s) on this date
 </p>

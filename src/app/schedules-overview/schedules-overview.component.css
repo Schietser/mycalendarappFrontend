@@ -1,7 +1,8 @@
 tbody {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .noEventsToShow {
@@ -33,20 +34,21 @@ tr {
 
 
 table textarea {
-    box-sizing: border-box;
-    background-color: #212529;
-    color: white;
-    width: 100%;
-  }
+  box-sizing: border-box;
+  background-color: #212529;
+  color: white;
+  width: 100%;
+}
 
-  .fullDay {
-    background-color: #8257e6;
-    text-align: center;
-  }
+.fullDay {
+  background-color: #8257e6;
+  text-align: center;
+}
 
-  .TasksLayout {
-    //flex: ;
-  }
-td.newligne{
-  border:  1px solid red;
+.TasksLayout {
+  /*flex:;*/
+}
+
+td.newligne {
+  border: 1px solid red;
 }

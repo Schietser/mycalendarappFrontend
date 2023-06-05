@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ExpertService } from '../../experts/expert.service';
-import { ScheduleService } from '../schedule.service';
-import { Schedule } from '../schedule';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ExpertService} from '../../experts/expert.service';
+import {ScheduleService} from '../schedule.service';
+import {Schedule} from '../schedule';
 
 @Component({
   selector: 'app-schedules-edit',
@@ -12,15 +12,26 @@ import { Schedule } from '../schedule';
 })
 export class SchedulesEditComponent implements OnInit {
 
-  scheduleId! : number;
-  schedule : Schedule={id : 2, title: 'title', description: 'description', startDate: new Date("2023-05-31"), endDate : new Date("2023-05-31"),  startTime: '09:30', endTime: '10:30', fullDay: false};
+  scheduleId!: number;
+  schedule: Schedule = {
+    id: 2,
+    title: 'title',
+    description: 'description',
+    startDate: '30/05/2023',//new Date("2023-05-31"),
+    endDate: '30/05/2023',//new Date("2023-05-31"),
+    startTime: '09:30',
+    endTime: '10:30',
+    fullDay: false
+  };
 
   scheduleForm: FormGroup = this.formBuilder.group({
     title: [null, Validators.required],
-    date: [null, Validators.required],
+    startDate: [null, Validators.required],
+    endDate: [null],
     startTime: [null, Validators.required],
     endTime: [null, Validators.required],
-    description: [null]
+    description: [null],
+    fullDay: [false]
   });
 
   constructor(
@@ -29,7 +40,8 @@ export class SchedulesEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private expertService: ExpertService,
     private scheduleService: ScheduleService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.scheduleId = this.activatedRoute.snapshot.params['id'] as number;
@@ -42,7 +54,7 @@ export class SchedulesEditComponent implements OnInit {
     });
   }
 
-  private loadSchedule() : any{
+  private loadSchedule(): any {
     console.log('Loading schedule');
     this.scheduleService.findById(this.scheduleId).subscribe(schedule => {
       this.scheduleForm.patchValue({

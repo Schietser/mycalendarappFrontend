@@ -1,3 +1,16 @@
 label {
-    font-size: x-large;
+  font-size: x-large;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 32px;
+}
+
+.checkbox {
+  width: 26px;
 }
