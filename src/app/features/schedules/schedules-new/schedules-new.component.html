@@ -1,43 +1,68 @@
-<h1 class="text-center mb-4">New Task</h1>
+<h1 class="text-center mb-4">Edit task</h1>
 
 <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label>Title</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Title..."
+      formControlName="title"
+    />
+  </div>
 
-    <div class="mb-3">
-        <label class="form-label">Title</label>
-        <input type="tex    t" class="form-control" placeholder="Title..." formControlName="title">
+  <div class="row mb-3">
+    <div class="col-sm-4">
+      <label>Start date</label>
+      <input type="date" class="form-control" formControlName="date" />
+    </div>
+    <div class="col-sm-4">
+      <label>Start time</label>
+      <input type="time" class="form-control" formControlName="initTime" />
+    </div>
+    <div class="col-sm-4">
+      <label class="container">
+        <input  type="checkbox" class="checkbox">
+          <div class="checkmark"></div>
+         <div class="text">Full day</div>
+      </label>
     </div>
 
-    <div class="row mb-3">
-        <div class="col-sm-4">
-            <label class="form-label">Date</label>
-            <input type="date" class="form-control" formControlName="date">
-        </div>
-        <div class="col-sm-4">
-            <label class="form-label">Init time</label>
-            <input type="time" class="form-control" formControlName="startTime">
-        </div>
-        <div class="col-sm-4">
-            <label class="form-label">End time</label>
-            <input type="time" class="form-control" formControlName="endTime">
-            <small class="text-danger" *ngIf="scheduleForm.errors?.['timeError']">{{scheduleForm.errors?.['timeError']}}</small>
-        </div>
+    <div class="row mb-4"></div>
+    <div class="col-sm-4">
+      <label>End date</label>
+      <input type="date" class="form-control" formControlName="date" />
+    </div>
+    <div class="col-sm-4">
+      <label>End time</label>
+      <input type="time" class="form-control" formControlName="endTime" />
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Description</label>
-        <textarea class="form-control" rows="6" placeholder="Description..." formControlName="description"></textarea>
+      <label>Description</label>
+      <textarea
+        class="form-control"
+        rows="6"
+        placeholder="Description..."
+        formControlName="description"
+      ></textarea>
     </div>
 
     <div class="row">
-        <div class="col-sm-6">
-            <a routerLink="/schedules" class="btn btn-outline-purple w-100">
-                Back
-            </a>
-        </div>
-        <div class="col-sm-6">
-            <button type="submit" class="btn btn-outline-success w-100" [disabled]="!scheduleForm.valid">
-                Save
-            </button>
-        </div>
+      <div class="col-sm-6">
+        <a routerLink="/schedules" class="btn btn-outline-purple w-100">
+          Back
+        </a>
+      </div>
+      <div class="col-sm-6">
+        <button
+          type="submit"
+          class="btn btn-outline-success w-100"
+          [disabled]="!scheduleForm.valid"
+        >
+          Update
+        </button>
+      </div>
     </div>
+  </div>
 </form>

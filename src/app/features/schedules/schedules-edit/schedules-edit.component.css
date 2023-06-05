@@ -1,0 +1,24 @@
+label {
+    font-size: x-large;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    cursor: pointer;
+   user-select: none;
+      margin-top: 32px;
+  }
+  
+  .text {
+    color: white;
+   font-size: medium;
+  margin-left: 1em;
+  
+   
+  }
+  .checkbox{
+  width: 26px;
+  }
+  
