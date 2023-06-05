@@ -37,6 +37,7 @@ table textarea {
   box-sizing: border-box;
   background-color: #212529;
   color: white;
+  width: 100%;
 }
 
 .fullDay {
@@ -46,5 +47,9 @@ table textarea {
 
 td.newligne {
   border: 1px solid red;
+}
+
+.row {
+  justify-content: center;
 }
 
