@@ -39,14 +39,14 @@ export class SchedulesOverviewComponent implements OnInit {
   private showAllSchedules() {
 
     console.log('show all schedules');
-    this.scheduleService.findAllByDay(this.day).subscribe(
+    /*this.scheduleService.findAllByDay(this.day).subscribe(
       (data: Schedule[]) => {
         this.tasks = data;
       },
       (error: Error) => {
         console.log(error);
       }
-    );
+    );*/
 
 
     this.tasks.push({

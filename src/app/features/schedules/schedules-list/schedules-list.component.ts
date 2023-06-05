@@ -30,7 +30,7 @@ export class SchedulesListComponent implements OnInit {
     private router: Router,
     private modal: NgbModal,
     private scheduleService: ScheduleService) {
-    //this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1})
+    this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1})
     this.events.push({title: 'Dentist appointment', start: new Date('2023-05-30')})
 
   }
@@ -161,7 +161,7 @@ export class SchedulesListComponent implements OnInit {
         error: err => console.log('error', err)
       });
 
-    this.events = this.eventsCopy;
+    //this.events = this.eventsCopy;
     this.refreshCalendar.next();
   }
 
