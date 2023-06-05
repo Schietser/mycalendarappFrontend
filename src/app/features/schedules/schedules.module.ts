@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { SchedulesRoutingModule } from './schedules-routing.module';
-import { SchedulesEditComponent } from './schedules-edit/schedules-edit.component';
-import { SchedulesListComponent } from './schedules-list/schedules-list.component';
-import { SchedulesNewComponent } from './schedules-new/schedules-new.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
+import {SchedulesRoutingModule} from './schedules-routing.module';
+import {SchedulesEditComponent} from './schedules-edit/schedules-edit.component';
+import {SchedulesListComponent} from './schedules-list/schedules-list.component';
+import {SchedulesNewComponent} from './schedules-new/schedules-new.component';
+import {CalendarModule, DateAdapter} from 'angular-calendar';
 
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {SchedulesOverviewComponent} from "./schedules-overview/schedules-overview.component";
 
 // import localePt from '@angular/common/locales/pt';
 
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     SchedulesEditComponent,
     SchedulesListComponent,
-    SchedulesNewComponent
+    SchedulesNewComponent,
+    SchedulesOverviewComponent
   ],
   imports: [
     FormsModule,
@@ -32,4 +34,5 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     }),
   ]
 })
-export class SchedulesModule { }
+export class SchedulesModule {
+}

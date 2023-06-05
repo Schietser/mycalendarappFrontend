@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ScheduleService} from '../features/schedules/schedule.service';
-import {Schedule} from '../features/schedules/schedule';
+import {Schedule} from '../schedule';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ScheduleService} from "../schedule.service";
 
 @Component({
   selector: 'app-schedules-overview',
