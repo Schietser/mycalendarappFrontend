@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ExpertService} from '../../experts/expert.service';
 import {ScheduleService} from '../schedule.service';
 import {Schedule} from '../schedule';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-schedules-edit',
@@ -36,6 +37,7 @@ export class SchedulesEditComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private location: Location,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private expertService: ExpertService,
@@ -53,6 +55,12 @@ export class SchedulesEditComponent implements OnInit {
       this.router.navigateByUrl('/schedules');
     });
   }
+
+  onBack() {
+    this.location.back();
+  }
+
+
 
   private loadSchedule(): any {
     console.log('Loading schedule');

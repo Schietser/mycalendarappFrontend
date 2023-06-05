@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { SchedulesOverviewComponent } from './schedules-overview/schedules-overview.component';
+import { SchedulesOverviewComponent } from './features/schedules/schedules-overview/schedules-overview.component';
 
 @NgModule({
   declarations: [

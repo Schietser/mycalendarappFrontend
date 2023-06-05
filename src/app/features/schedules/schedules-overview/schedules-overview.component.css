@@ -3,6 +3,7 @@ tbody {
   margin-right: auto;
   text-align: left;
   white-space: nowrap;
+  
 }
 
 .noEventsToShow {
@@ -18,7 +19,6 @@ tbody {
 
 td {
   color: white !important;
-  width: 50%;
 }
 
 td {
@@ -45,10 +45,11 @@ table textarea {
   text-align: center;
 }
 
-.TasksLayout {
-  /*flex:;*/
-}
-
 td.newligne {
   border: 1px solid red;
 }
+
+.row {
+  justify-content: center;
+}
+
