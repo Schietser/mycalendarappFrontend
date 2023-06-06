@@ -54,31 +54,8 @@ export class SchedulesOverviewComponent implements OnInit {
       }
     });
 
-    this.tasks.push({
-      id: 2,
-      title: 'Dentist appointment',
-      startDate: '30/05/2023',//new Date('2023-05-30'),
-      endDate: '30/05/2023',//new Date('2023-05-30'),
-      startTime: '11:30',
-      endTime: '12:00',
-      description: 'Dentist appointment at 11:30 to fill cavities',
-      fullDay: false
-    })
-
-    this.tasks.push({
-      id: 3,
-      title: 'Test evenement',
-      startDate: '30/05/2023',//new Date('2023-05-30'),
-      endDate: '30/05/2023',//new Date('2023-05-30'),
-      startTime: '14:30',
-      endTime: '15:00',
-      description: 'Test evenement',
-      fullDay: true
-    })
-    
     console.log(this.tasks);
 
     return this.tasks;
   }
-
 }

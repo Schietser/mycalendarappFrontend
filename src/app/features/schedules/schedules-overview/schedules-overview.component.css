@@ -3,7 +3,7 @@ tbody {
   margin-right: auto;
   text-align: left;
   white-space: nowrap;
-  
+
 }
 
 .noEventsToShow {
@@ -11,8 +11,8 @@ tbody {
   font-size: x-large;
 }
 
-.backbtn {
-  float: left;
+.backBtn {
+  /*float: left;*/
   width: 15%;
 }
 

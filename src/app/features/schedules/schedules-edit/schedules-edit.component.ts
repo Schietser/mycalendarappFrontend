@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ExpertService} from '../../experts/expert.service';
 import {ScheduleService} from '../schedule.service';
 import {Schedule} from '../schedule';
-import { Location } from '@angular/common'
+import {Location} from '@angular/common'
 
 @Component({
   selector: 'app-schedules-edit',
@@ -26,7 +26,7 @@ export class SchedulesEditComponent implements OnInit {
   };
 
   scheduleForm: FormGroup = this.formBuilder.group({
-    title: [null, Validators.required],
+    title: [this.schedule.title, Validators.required],
     startDate: [null, Validators.required],
     endDate: [null],
     startTime: [null, Validators.required],
@@ -45,6 +45,22 @@ export class SchedulesEditComponent implements OnInit {
   ) {
   }
 
+  private scheduleDateToInputDateFormat(scheduleDateFormat: string): string {
+    let dd, MM, yyyy;
+
+    [dd, MM, yyyy] = scheduleDateFormat.split('/');
+
+    return yyyy + "-" + MM + "-" + dd;
+  }
+
+  private InputDateToScheduleDateFormat(inputDateFormat: string): string {
+    let dd, MM, yyyy;
+
+    [yyyy, MM, dd] = inputDateFormat.split('-');
+
+    return dd + "/" + MM + "/" + yyyy;
+  }
+
   ngOnInit(): void {
     this.scheduleId = this.activatedRoute.snapshot.params['id'] as number;
     this.loadSchedule();
@@ -59,7 +75,6 @@ export class SchedulesEditComponent implements OnInit {
   onBack() {
     this.location.back();
   }
-
 
 
   private loadSchedule(): any {
