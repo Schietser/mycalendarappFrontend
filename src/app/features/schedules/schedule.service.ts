@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {Schedule} from './schedule';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {format} from "date-fns";
 
 
@@ -65,7 +65,7 @@ export class ScheduleService {
 
   findAllByMonthOfYear(date: Date): Observable<Schedule[]> {
     let dateString: string = format(date, 'dd/MM/yyyy');
-    var schedule: Schedule = {
+    /*var schedule: Schedule = {
       id: 2,
       title: 'title',
       description: 'description',
@@ -75,9 +75,9 @@ export class ScheduleService {
       endTime: '10:30',
       fullDay: false
     };
-    return of([schedule]);
+    return of([schedule]);*/
 
-    //return this.http.get<Schedule[]>(`${this.apiUrl}/month-of-year?date=${dateString}`);
+    return this.http.get<Schedule[]>(`${this.apiUrl}/month-of-year?date=${dateString}`);
   }
 
   delete(id: number) {

@@ -35,7 +35,7 @@ export class SchedulesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.loadSchedules();
+    this.loadSchedules();
     console.log(this.events)
   }
 
@@ -159,10 +159,11 @@ export class SchedulesListComponent implements OnInit {
 
           console.log(response);
         },
-        error: err => console.log('error', err)
+        error: err => console.log('error', err),
+        complete: () => this.events = this.eventsCopy.concat(this.events)
       });
 
-    this.events = this.eventsCopy.concat(this.events);
+    //this.events = this.eventsCopy.concat(this.events);
     //this.refreshCalendar.next();
   }
 

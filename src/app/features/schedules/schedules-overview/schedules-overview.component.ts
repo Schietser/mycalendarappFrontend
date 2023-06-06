@@ -75,7 +75,7 @@ export class SchedulesOverviewComponent implements OnInit {
       description: 'Test evenement',
       fullDay: true
     })
-
+    
     console.log(this.tasks);
 
     return this.tasks;
