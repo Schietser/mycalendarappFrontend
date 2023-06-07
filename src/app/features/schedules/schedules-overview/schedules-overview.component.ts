@@ -34,7 +34,7 @@ export class SchedulesOverviewComponent implements OnInit {
   }
 
   onEdit(event: Schedule) {
-    this.router.navigate([`/schedules/edit/${event.id}`]);
+    this.router.navigate([`/schedules/edit/${event.id}/`]);
   }
 
   onDelete(event: Schedule) {

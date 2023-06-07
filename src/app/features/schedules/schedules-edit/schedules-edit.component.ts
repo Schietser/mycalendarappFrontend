@@ -14,7 +14,9 @@ import {Location} from '@angular/common'
 export class SchedulesEditComponent implements OnInit {
 
   scheduleId!: number;
-  schedule: Schedule = {
+  schedule!: Schedule;
+  day!: string;
+  /*schedule: Schedule = {
     id: 2,
     title: 'title',
     description: 'description',
@@ -23,10 +25,10 @@ export class SchedulesEditComponent implements OnInit {
     startTime: '09:30',
     endTime: '10:30',
     fullDay: false
-  };
+  };*/
 
   scheduleForm: FormGroup = this.formBuilder.group({
-    title: [this.schedule.title, Validators.required],
+    title: [null, Validators.required],
     startDate: [null, Validators.required],
     endDate: [null],
     startTime: [null, Validators.required],
@@ -63,12 +65,18 @@ export class SchedulesEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.scheduleId = this.activatedRoute.snapshot.params['id'] as number;
+    this.day = this.activatedRoute.snapshot.params['day'] as string;
     this.loadSchedule();
   }
 
   onSubmit() {
-    this.scheduleService.update(this.scheduleId, this.scheduleForm.value).subscribe(() => {
-      this.router.navigateByUrl('/schedules');
+    let updateSchedule = this.scheduleForm.value;
+    updateSchedule.startDate = this.scheduleDateToInputDateFormat(updateSchedule.startDate);
+    updateSchedule.endDate = this.scheduleDateToInputDateFormat(updateSchedule.endDate);
+
+    this.scheduleService.update(this.scheduleId, updateSchedule).subscribe(() => {
+      //this.router.navigateByUrl('/schedules');
+      this.router.navigateByUrl('/overview/' + this.day);
     });
   }
 
@@ -79,19 +87,23 @@ export class SchedulesEditComponent implements OnInit {
 
   private loadSchedule(): any {
     console.log('Loading schedule');
+
     this.scheduleService.findById(this.scheduleId).subscribe(schedule => {
       this.scheduleForm.patchValue({
         title: schedule.title,
-        date: schedule.startDate,
+        startDate: schedule.startDate,
+        endDate: schedule.endDate,
         startTime: schedule.startTime,
         endTime: schedule.endTime,
-        description: schedule.description
+        description: schedule.description,
+        fullDay: schedule.fullDay
       });
+
+      this.schedule = schedule;
 
       console.log(this.schedule);
 
       return schedule;
-
     });
   }
 
