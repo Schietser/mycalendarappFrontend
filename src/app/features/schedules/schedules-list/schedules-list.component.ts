@@ -29,9 +29,8 @@ export class SchedulesListComponent implements OnInit {
     private router: Router,
     private modal: NgbModal,
     private scheduleService: ScheduleService) {
-    this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1, end: new Date('2023-06-04')})
-    this.events.push({title: 'Dentist appointment', start: new Date('2023-05-30'), end: new Date('2023-06-01')})
-
+    // this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1, end: new Date('2023-06-04')})
+    // this.events.push({title: 'Dentist appointment', start: new Date('2023-05-30'), end: new Date('2023-06-01')})
   }
 
   ngOnInit(): void {

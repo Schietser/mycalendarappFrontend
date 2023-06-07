@@ -55,7 +55,7 @@ export class SchedulesEditComponent implements OnInit {
     return yyyy + "-" + MM + "-" + dd;
   }
 
-  private InputDateToScheduleDateFormat(inputDateFormat: string): string {
+  private inputDateToScheduleDateFormat(inputDateFormat: string): string {
     let dd, MM, yyyy;
 
     [yyyy, MM, dd] = inputDateFormat.split('-');
@@ -71,17 +71,20 @@ export class SchedulesEditComponent implements OnInit {
 
   onSubmit() {
     let updateSchedule = this.scheduleForm.value;
-    updateSchedule.startDate = this.scheduleDateToInputDateFormat(updateSchedule.startDate);
-    updateSchedule.endDate = this.scheduleDateToInputDateFormat(updateSchedule.endDate);
+    updateSchedule.startDate = this.inputDateToScheduleDateFormat(updateSchedule.startDate);
+    updateSchedule.endDate = updateSchedule.endDate != null ?
+      this.inputDateToScheduleDateFormat(updateSchedule.endDate)
+      : updateSchedule.endDate;
 
     this.scheduleService.update(this.scheduleId, updateSchedule).subscribe(() => {
       //this.router.navigateByUrl('/schedules');
-      this.router.navigateByUrl('/overview/' + this.day);
+      this.router.navigateByUrl('/schedules/overview/' + this.day);
     });
   }
 
   onBack() {
-    this.location.back();
+    //this.location.back();
+    this.router.navigateByUrl('/schedules/overview/' + this.day);
   }
 
 
@@ -91,8 +94,8 @@ export class SchedulesEditComponent implements OnInit {
     this.scheduleService.findById(this.scheduleId).subscribe(schedule => {
       this.scheduleForm.patchValue({
         title: schedule.title,
-        startDate: schedule.startDate,
-        endDate: schedule.endDate,
+        startDate: this.scheduleDateToInputDateFormat(schedule.startDate),
+        endDate: schedule.endDate != null ? this.scheduleDateToInputDateFormat(schedule.endDate) : schedule.endDate,
         startTime: schedule.startTime,
         endTime: schedule.endTime,
         description: schedule.description,
@@ -101,10 +104,36 @@ export class SchedulesEditComponent implements OnInit {
 
       this.schedule = schedule;
 
-      console.log(this.schedule);
 
+      if (this.scheduleForm.get("fullDay")?.value == true) {
+
+        this.scheduleForm.get("endDate")?.reset();
+        this.scheduleForm.get("startTime")?.reset();
+        this.scheduleForm.get("endTime")?.reset();
+
+        this.scheduleForm.get("endDate")?.disable();
+        this.scheduleForm.get("startTime")?.disable();
+        this.scheduleForm.get("endTime")?.disable();
+      }
       return schedule;
     });
+
   }
 
+
+  fullDayChecked(): void {
+    if (this.scheduleForm.get("fullDay")?.value) {
+      this.scheduleForm.get("endDate")?.reset();
+      this.scheduleForm.get("startTime")?.reset();
+      this.scheduleForm.get("endTime")?.reset();
+
+      this.scheduleForm.get("endDate")?.disable();
+      this.scheduleForm.get("startTime")?.disable();
+      this.scheduleForm.get("endTime")?.disable();
+    } else {
+      this.scheduleForm.get("endDate")?.enable();
+      this.scheduleForm.get("startTime")?.enable();
+      this.scheduleForm.get("endTime")?.enable();
+    }
+  }
 }

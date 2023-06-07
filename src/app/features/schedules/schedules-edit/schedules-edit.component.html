@@ -1,5 +1,5 @@
 <h1 class="text-center mb-4">Edit task</h1>
-
+<!-- when push a submit button on form the form calls onSubmit() if onclick on submit button it is called twice -->
 <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
   <div class="mb-3">
     <label>Title</label>
@@ -22,7 +22,7 @@
     </div>
     <div class="col-sm-4">
       <label class="container">
-        <input type="checkbox" class="checkbox" formControlName="fullDay">
+        <input type="checkbox" class="checkbox" formControlName="fullDay" (change)="fullDayChecked()">
         <div class="checkmark"></div>
         <div class="text">Full day</div>
       </label>
@@ -50,7 +50,7 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <a class="btn btn-outline-purple w-100" (click) = "onBack()">
+        <a class="btn btn-outline-purple w-100" (click)="onBack()">
           Back
         </a>
       </div>
@@ -58,11 +58,11 @@
         <button
           type="submit"
           class="btn btn-outline-success w-100"
-          [disabled]="!scheduleForm.valid"
-        >
+          [disabled]="!scheduleForm.valid">
           Update
         </button>
       </div>
     </div>
   </div>
 </form>
+

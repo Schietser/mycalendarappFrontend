@@ -3,7 +3,17 @@
     Back
   </a>
 </p><br>
-<h1 class="text-center mb-4">Tasks {{day | date:'dd/MM/yyyy'}}</h1>
+<div class="text-center">
+  <div class="btn-group">
+    <button type="button" class="btn btn-outline-purple" (click)="previousDayTasks()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <h1 class=" mb-4">&nbsp;Tasks {{day | date:'dd/MM/yyyy'}}&nbsp;</h1>
+    <button type="button" class="btn btn-outline-purple" (click)="nextDayTasks()">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
 <div class="table-responsive">
   <table class="table table-striped mx-auto w-auto">
     <tbody *ngIf="tasks.length">
@@ -65,6 +75,6 @@
   </table>
 </div>
 
-<p *ngIf="tasks.length === 0" class="noEventsToShow">
+<p class="text-center noEventsToShow" *ngIf="tasks.length === 0">
   No event(s) on this date
 </p>
