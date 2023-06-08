@@ -137,7 +137,11 @@ export class SchedulesListComponent implements OnInit {
 
   nextMonth() {
 
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1));
+    let nextMonthDate = new Date();
+    nextMonthDate.setDate(1);
+    nextMonthDate.setMonth(this.viewDate.getMonth() + 1);
+    this.viewDate = nextMonthDate //new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1));
+
     this.events.length = 0;
     console.log("Next Month : " + this.viewDate);
     this.loadSchedules();
@@ -145,6 +149,7 @@ export class SchedulesListComponent implements OnInit {
 
 
   currentMonth() {
+
     this.viewDate = new Date();
     this.events.length = 0
     console.log("Current Month : " + this.viewDate);
@@ -153,7 +158,11 @@ export class SchedulesListComponent implements OnInit {
 
   previousMonth() {
 
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1));
+    let previousMonthDate = new Date();
+    previousMonthDate.setDate(1);
+    previousMonthDate.setMonth(this.viewDate.getMonth() - 1);
+    this.viewDate = previousMonthDate //new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1));
+
     this.events.length = 0
     console.log("Previous Month : " + this.viewDate);
     this.loadSchedules();
