@@ -140,6 +140,12 @@ export class SchedulesListComponent implements OnInit {
     let nextMonthDate = new Date();
     nextMonthDate.setDate(1);
     nextMonthDate.setMonth(this.viewDate.getMonth() + 1);
+    nextMonthDate.setFullYear(this.viewDate.getFullYear());
+
+    if (this.viewDate.getMonth() === 11) {
+      nextMonthDate.setMonth(0);
+      nextMonthDate.setFullYear(this.viewDate.getFullYear() + 1);
+    }
     this.viewDate = nextMonthDate //new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1));
 
     this.events.length = 0;
@@ -161,6 +167,12 @@ export class SchedulesListComponent implements OnInit {
     let previousMonthDate = new Date();
     previousMonthDate.setDate(1);
     previousMonthDate.setMonth(this.viewDate.getMonth() - 1);
+    previousMonthDate.setFullYear(this.viewDate.getFullYear());
+
+    if (this.viewDate.getMonth() === 0) {
+      previousMonthDate.setMonth(11);
+      previousMonthDate.setFullYear(this.viewDate.getFullYear() - 1);
+    }
     this.viewDate = previousMonthDate //new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1));
 
     this.events.length = 0
