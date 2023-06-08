@@ -4,8 +4,8 @@
   justify-content: flex-start;
   position: relative;
   cursor: pointer;
- user-select: none;
-    margin-top: 32px;
+  user-select: none;
+  margin-top: 32px;
 }
 
 .text {
@@ -14,8 +14,12 @@
   margin-left: 1em;
 }
 
-.checkbox{
-width: 26px;
+.checkbox {
+  width: 26px;
+}
+
+input[type='checkbox'], input[type='radio'] {
+  filter: grayscale(1);
 }
 
 

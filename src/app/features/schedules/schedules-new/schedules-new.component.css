@@ -16,3 +16,8 @@
 .checkbox {
   width: 26px;
 }
+
+input[type='checkbox'], input[type='radio'] {
+  filter: grayscale(1);
+}
+

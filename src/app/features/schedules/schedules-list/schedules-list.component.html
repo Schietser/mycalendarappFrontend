@@ -12,25 +12,20 @@
   <div class="col-md-4">
     <div class="btn-toolbar justify-content-center justify-content-sm-end" role="toolbar"
          aria-label="Toolbar with button groups">
-      <!-- <div class="btn-group me-3">
-          <button type="button" class="btn" (click)="setView(CalendarView.Month)" [ngClass]="view === CalendarView.Month ? ' btn-purple' : ' btn-outline-purple'">
-              Month
-          </button>
-          <button type="button" class="btn" (click)="setView(CalendarView.Week)" [ngClass]="view === CalendarView.Week ? ' btn-purple' : ' btn-outline-purple'">
-              Week
-          </button>
-      </div> -->
 
       <div class="btn-group">
+        <!--[(viewDate)]="viewDate" (viewDateChange)="closeActiveDay()"-->
         <button type="button" class="btn btn-outline-purple" mwlCalendarPreviousView [view]="view"
-                [(viewDate)]="viewDate" (viewDateChange)="closeActiveDay()">
+                (click)="previousMonth()">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <button type="button" class="btn btn-outline-purple" mwlCalendarToday [(viewDate)]="viewDate">
+        <!--  [(viewDate)]="viewDate"  -->
+        <button type="button" class="btn btn-outline-purple" mwlCalendarToday (click)="currentMonth()">
           <i class="fa-solid fa-calendar-check"></i>
         </button>
-        <button type="button" class="btn btn-outline-purple" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeActiveDay()">
+        <!--  [(viewDate)]="viewDate"     (viewDateChange)="closeActiveDay()"-->
+        <button type="button" class="btn btn-outline-purple" mwlCalendarNextView [view]="view"
+                (click)="nextMonth()">
           <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
@@ -49,16 +44,6 @@
     (eventClicked)="onEventClick($event.event)">
   </mwl-calendar-month-view>
 
-  <!-- <mwl-calendar-week-view
-      *ngSwitchCase="CalendarView.Week"
-      [viewDate]="viewDate"
-      [events]="events"
-      [dayStartHour]="13"
-      [dayEndHour]="23"
-      (beforeViewRender)="onBeforeRenderWeek($event)"
-      (hourSegmentClicked)="onSegmentClick($event.date)"
-      (eventClicked)="onEventClick($event.event)">
-  </mwl-calendar-week-view> -->
 </div>
 
 <ng-template #modalContent let-modal>

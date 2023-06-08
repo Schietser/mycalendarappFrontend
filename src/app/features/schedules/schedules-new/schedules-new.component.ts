@@ -3,10 +3,9 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {ActivatedRoute, Router} from '@angular/router';
 import {parse} from 'date-fns';
 import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
-import {Expert} from '../../experts/expert';
 import {ExpertService} from '../../experts/expert.service';
 import {ScheduleService} from '../schedule.service';
+import {Schedule} from "../schedule";
 
 @Component({
   selector: 'app-schedules-new',
@@ -15,21 +14,21 @@ import {ScheduleService} from '../schedule.service';
 })
 export class SchedulesNewComponent implements OnInit {
 
-  experts: Observable<Expert[]> = this.expertService.findAll();
+  task!: Schedule;
 
   scheduleForm: FormGroup = this.formBuilder.group({
     title: [null, Validators.required],
-    startDate: ["2020-03-10", Validators.required],
+    startDate: [null, Validators.required],
     endDate: [null],
-    startTime: [null, Validators.required],
-    endTime: [null, Validators.required],
+    startTime: [null],
+    endTime: [null],
     description: [null],
     fullDay: [false]
-  }, {validators: this.endTimeValidator});
+  });//, {validators: this.endTimeValidator, updateOn: 'submit'}
 
   constructor(
     private router: Router,
-    private toastr: ToastrService,
+    private toastrService: ToastrService,
     private formBuilder: FormBuilder,
     private expertService: ExpertService,
     private activatedRoute: ActivatedRoute,
@@ -38,32 +37,70 @@ export class SchedulesNewComponent implements OnInit {
   }
 
   ngOnInit() {
-    const {date, startTime} = this.activatedRoute.snapshot.queryParams;
-    if (date && startTime) {
-      this.scheduleForm.patchValue({date, startTime});
-    }
+  }
+
+  private inputDateToScheduleDateFormat(inputDateFormat: string): string {
+    let dd, MM, yyyy;
+
+    [yyyy, MM, dd] = inputDateFormat.split('-');
+
+    return dd + "/" + MM + "/" + yyyy;
   }
 
   onSubmit() {
-    let data = this.scheduleForm.value;
-    this.scheduleService.save(this.scheduleForm.value).subscribe(() => {
-      this.router.navigateByUrl('/schedules');
-      this.toastr.success("Event scheduled successfully!", "Information");
+    this.task = this.scheduleForm.value;
+    this.task.startDate = this.inputDateToScheduleDateFormat(this.task.startDate);
+    this.task.endDate = this.task.endDate != null ?
+      this.inputDateToScheduleDateFormat(this.task.endDate)
+      : this.task.endDate;
+
+    console.log(this.task);
+
+    this.scheduleService.save(this.task).subscribe({
+      next: () => {
+        this.toastrService.success("Task successfully added!", "Success");
+      },
+      error: (err) => {
+        this.toastrService.error("Tasks not added in calendar! retry or contact administrator",
+          "Error", {timeOut: 10000, closeButton: true});
+        console.error(err);
+      },
+      complete: () => this.router.navigateByUrl('/schedules')
+        .catch((err) => console.error(err))
     });
   }
 
   private endTimeValidator(control: AbstractControl) {
+    const startDate = parse(control.get('StartDate')?.value, 'yyyy-MM-dd', Date.now());
+    const endDate = parse(control.get('endDate')?.value, 'yyyy-MM-dd', Date.now());
+
     const startTime = parse(control.get('startTime')?.value, 'HH:mm', Date.now());
     const endTime = parse(control.get('endTime')?.value, 'HH:mm', Date.now());
 
-    if (startTime >= endTime) {
+    if (startDate.getTime() === endDate.getTime()
+      && startTime >= endTime) {
       return {
         timeError: 'The end hour must be greater than initial hour.'
       }
     }
 
-
     return null;
   }
 
+
+  fullDayChecked(): void {
+    if (this.scheduleForm.get("fullDay")?.value == true) {
+      this.scheduleForm.get("endDate")?.reset();
+      this.scheduleForm.get("startTime")?.reset();
+      this.scheduleForm.get("endTime")?.reset();
+
+      this.scheduleForm.get("endDate")?.disable();
+      this.scheduleForm.get("startTime")?.disable();
+      this.scheduleForm.get("endTime")?.disable();
+    } else {
+      this.scheduleForm.get("endDate")?.enable();
+      this.scheduleForm.get("startTime")?.enable();
+      this.scheduleForm.get("endTime")?.enable();
+    }
+  }
 }

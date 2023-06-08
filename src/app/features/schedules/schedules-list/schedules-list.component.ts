@@ -6,6 +6,7 @@ import {MonthViewDay} from 'calendar-utils';
 import {format, isAfter, isBefore, isSameDay, isSameMonth} from 'date-fns';
 import {Schedule} from '../schedule';
 import {ScheduleService} from '../schedule.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-schedules-list',
@@ -21,16 +22,15 @@ export class SchedulesListComponent implements OnInit {
   activeDayIsOpen = false;
   view = CalendarView.Month;
   events: CalendarEvent[] = [];
-  // refreshCalendar: Subject<void> = new Subject();
   modalData!: { schedule: Schedule };
   eventsCopy: CalendarEvent[] = [];
 
   constructor(
     private router: Router,
     private modal: NgbModal,
-    private scheduleService: ScheduleService) {
-    // this.events.push({start: new Date('2023-05-31'), title: 'Schedule', id: 1, end: new Date('2023-06-04')})
-    // this.events.push({title: 'Dentist appointment', start: new Date('2023-05-30'), end: new Date('2023-06-01')})
+    private scheduleService: ScheduleService,
+    private toastrService: ToastrService
+  ) {
   }
 
   ngOnInit(): void {
@@ -50,7 +50,9 @@ export class SchedulesListComponent implements OnInit {
 
     console.log("OnDayClick " + date)
 
-    this.router.navigate([`/schedules/overview/${format(date, 'dd-MM-yyyy')}`]);
+    this.router.navigate([`/schedules/overview/${format(date, 'dd-MM-yyyy')}`])
+      .catch((err) => console.error(err));
+
     if (isSameMonth(date, this.viewDate)) {
       if (events.length === 0 || (isSameDay(this.viewDate, date) && this.activeDayIsOpen)) {
         this.activeDayIsOpen = false;
@@ -63,9 +65,8 @@ export class SchedulesListComponent implements OnInit {
   }
 
   onEventClick(event: CalendarEvent) {
-    this.router.navigate([`/schedules/edit/${event.id}`]);
-    /* this.modalData = { schedule: event.meta };
-    this.modal.open(this.modalContent, { size: 'md' }); */
+    this.router.navigate([`/schedules/edit/${event.id}`])
+      .catch((err) => console.log(err));
   }
 
   onSegmentClick(date: Date) {
@@ -98,19 +99,6 @@ export class SchedulesListComponent implements OnInit {
         this.router.navigate(['schedules', schedule.id]);
       }
     });
-
-    events.push({
-      label: '<i class="fa-solid fa-trash-can mx-1 text-purple"></i>',
-      onClick: (): void => {
-
-        this.scheduleService.delete(schedule.id).subscribe(() => {
-          this.loadSchedules();
-          this.closeActiveDay();
-        });
-      }
-    });
-
-    return events;
   }
 
   private convertStringToDate(stringDate: string): Date {
@@ -119,30 +107,10 @@ export class SchedulesListComponent implements OnInit {
     return new Date(yyyy + "-" + MM + "-" + dd + "T12:00:00");// avoid GMT problem for +12 to -12
   }
 
-  private buildEvent(schedule: Schedule) {
-    const parsedDate = this.convertStringToDate(schedule.startDate);
-    const event: CalendarEvent = {
-      id: schedule.id,
-      title: schedule.title,
-      //start: parse(schedule.startTime ? schedule.startTime : "00:00", 'HH:mm', parsedDate),
-      start: new Date('2023-06-22')
-      /*end: parse(schedule.endTime ? schedule.endTime : "00:00", 'HH:mm', parsedDate),
-      cssClass: 'event-body',
-      color: {
-        primary: 'var(--purple)',
-        secondary: 'var(--bg-purple-alpha)'
-      },
-      meta: schedule*/
-    }
-
-    //if (isAfter(event.start, new Date())) {
-    // event.actions = this.buildEventActions(schedule);
-    // }
-
-    return event;
-  }
 
   private loadSchedules() {
+
+    this.eventsCopy.length = 0;
 
     this.scheduleService.findAllByMonthOfYear(this.viewDate)
       .subscribe({
@@ -154,16 +122,41 @@ export class SchedulesListComponent implements OnInit {
                 title: schedule.title,
                 start: this.convertStringToDate(schedule.startDate),
                 end: this.convertStringToDate(schedule.endDate ? schedule.endDate : schedule.startDate)
-              }));//this.buildEvent(schedule)));
+              }));
 
           console.log(response);
         },
-        error: err => console.log('error', err),
+        error: err => {
+          console.error('error', err);
+          this.toastrService.error("Tasks not loaded in calendar! reload page or contact administrator",
+            "Error", {timeOut: 10000, closeButton: true});
+        },
         complete: () => this.events = this.eventsCopy.concat(this.events)
       });
+  }
 
-    //this.events = this.eventsCopy.concat(this.events);
-    //this.refreshCalendar.next();
+  nextMonth() {
+
+    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1));
+    this.events.length = 0;
+    console.log("Next Month : " + this.viewDate);
+    this.loadSchedules();
+  }
+
+
+  currentMonth() {
+    this.viewDate = new Date();
+    this.events.length = 0
+    console.log("Current Month : " + this.viewDate);
+    this.loadSchedules();
+  }
+
+  previousMonth() {
+
+    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1));
+    this.events.length = 0
+    console.log("Previous Month : " + this.viewDate);
+    this.loadSchedules();
   }
 
 }

@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ExpertService} from '../../experts/expert.service';
 import {ScheduleService} from '../schedule.service';
 import {Schedule} from '../schedule';
 import {Location} from '@angular/common'
+import {ToastrService} from "ngx-toastr";
+import {parse} from "date-fns";
 
 @Component({
   selector: 'app-schedules-edit',
@@ -16,16 +18,6 @@ export class SchedulesEditComponent implements OnInit {
   scheduleId!: number;
   schedule!: Schedule;
   day!: string;
-  /*schedule: Schedule = {
-    id: 2,
-    title: 'title',
-    description: 'description',
-    startDate: '30/05/2023',//new Date("2023-05-31"),
-    endDate: '30/05/2023',//new Date("2023-05-31"),
-    startTime: '09:30',
-    endTime: '10:30',
-    fullDay: false
-  };*/
 
   scheduleForm: FormGroup = this.formBuilder.group({
     title: [null, Validators.required],
@@ -35,7 +27,7 @@ export class SchedulesEditComponent implements OnInit {
     endTime: [null, Validators.required],
     description: [null],
     fullDay: [false]
-  });
+  });//, {validators: this.endTimeValidator, updateOn: 'submit'}
 
   constructor(
     private router: Router,
@@ -44,8 +36,27 @@ export class SchedulesEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private expertService: ExpertService,
     private scheduleService: ScheduleService,
+    private toastrService: ToastrService
   ) {
   }
+
+  private endTimeValidator(control: AbstractControl) {
+    const startDate = parse(control.get('StartDate')?.value, 'yyyy-MM-dd', Date.now());
+    const endDate = parse(control.get('endDate')?.value, 'yyyy-MM-dd', Date.now());
+
+    const startTime = parse(control.get('startTime')?.value, 'HH:mm', Date.now());
+    const endTime = parse(control.get('endTime')?.value, 'HH:mm', Date.now());
+
+    if (startDate.getTime() === endDate.getTime()
+      && startTime >= endTime) {
+      return {
+        timeError: 'The end hour must be greater than initial hour.'
+      }
+    }
+
+    return null;
+  }
+
 
   private scheduleDateToInputDateFormat(scheduleDateFormat: string): string {
     let dd, MM, yyyy;
@@ -70,59 +81,75 @@ export class SchedulesEditComponent implements OnInit {
   }
 
   onSubmit() {
+
     let updateSchedule = this.scheduleForm.value;
     updateSchedule.startDate = this.inputDateToScheduleDateFormat(updateSchedule.startDate);
     updateSchedule.endDate = updateSchedule.endDate != null ?
       this.inputDateToScheduleDateFormat(updateSchedule.endDate)
       : updateSchedule.endDate;
 
-    this.scheduleService.update(this.scheduleId, updateSchedule).subscribe(() => {
-      //this.router.navigateByUrl('/schedules');
-      this.router.navigateByUrl('/schedules/overview/' + this.day);
+    this.scheduleService.update(this.scheduleId, updateSchedule).subscribe({
+      next: () => {
+        this.toastrService.success("Task updated successfully!", "Success");
+      },
+      error: (err) => {
+        this.toastrService.error("Task not updated! retry or contact administrator",
+          "Error", {timeOut: 10000, closeButton: true});
+        console.error(err);
+      },
+      complete: () => {
+        this.router.navigateByUrl('/schedules/overview/' + this.day)
+          .catch((err) => console.error(err))
+      }
     });
   }
 
   onBack() {
-    //this.location.back();
-    this.router.navigateByUrl('/schedules/overview/' + this.day);
+    this.router.navigateByUrl('/schedules/overview/' + this.day)
+      .catch((err) => console.error(err));
   }
-
 
   private loadSchedule(): any {
     console.log('Loading schedule');
 
-    this.scheduleService.findById(this.scheduleId).subscribe(schedule => {
-      this.scheduleForm.patchValue({
-        title: schedule.title,
-        startDate: this.scheduleDateToInputDateFormat(schedule.startDate),
-        endDate: schedule.endDate != null ? this.scheduleDateToInputDateFormat(schedule.endDate) : schedule.endDate,
-        startTime: schedule.startTime,
-        endTime: schedule.endTime,
-        description: schedule.description,
-        fullDay: schedule.fullDay
-      });
+    this.scheduleService.findById(this.scheduleId).subscribe({
+      next: schedule => {
 
-      this.schedule = schedule;
+        this.scheduleForm.patchValue({
+          title: schedule.title,
+          startDate: this.scheduleDateToInputDateFormat(schedule.startDate),
+          endDate: schedule.endDate != null ? this.scheduleDateToInputDateFormat(schedule.endDate) : schedule.endDate,
+          startTime: schedule.startTime,
+          endTime: schedule.endTime,
+          description: schedule.description,
+          fullDay: schedule.fullDay
+        });
 
+        this.schedule = schedule;
 
-      if (this.scheduleForm.get("fullDay")?.value == true) {
+        if (this.scheduleForm.get("fullDay")?.value == true) {
 
-        this.scheduleForm.get("endDate")?.reset();
-        this.scheduleForm.get("startTime")?.reset();
-        this.scheduleForm.get("endTime")?.reset();
+          this.scheduleForm.get("endDate")?.reset();
+          this.scheduleForm.get("startTime")?.reset();
+          this.scheduleForm.get("endTime")?.reset();
 
-        this.scheduleForm.get("endDate")?.disable();
-        this.scheduleForm.get("startTime")?.disable();
-        this.scheduleForm.get("endTime")?.disable();
+          this.scheduleForm.get("endDate")?.disable();
+          this.scheduleForm.get("startTime")?.disable();
+          this.scheduleForm.get("endTime")?.disable();
+        }
+        return schedule;
+      },
+      error: (err) => {
+        this.toastrService.error("Task not loaded! reload page  or contact administrator",
+          "Error", {timeOut: 10000, closeButton: true});
+        console.error(err);
       }
-      return schedule;
     });
 
   }
 
-
   fullDayChecked(): void {
-    if (this.scheduleForm.get("fullDay")?.value) {
+    if (this.scheduleForm.get("fullDay")?.value == true) {
       this.scheduleForm.get("endDate")?.reset();
       this.scheduleForm.get("startTime")?.reset();
       this.scheduleForm.get("endTime")?.reset();

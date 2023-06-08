@@ -19,7 +19,7 @@ export class SchedulesOverviewComponent implements OnInit {
     private scheduleService: ScheduleService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private toastr: ToastrService,
+    private toastrService: ToastrService
   ) {
   }
 
@@ -39,21 +39,27 @@ export class SchedulesOverviewComponent implements OnInit {
   onEdit(event: Schedule) {
     let dateString: string = format(this.day, 'dd-MM-yyyy');
 
-    this.router.navigate([`/schedules/edit/${event.id}/${dateString}`]);
+    this.router.navigate([`/schedules/edit/${event.id}/${dateString}`])
+      .catch((err) => console.error(err));
   }
 
   onDelete(event: Schedule) {
     console.log("delete: " + event.id);
     this.scheduleService.delete(event.id).subscribe({
       next: () => {
-        this.toastr.success("Task deleted successfully!", "Information");
-        let dateString: string = format(this.day, 'dd-MM-yyyy');
-
-        this.router.navigate([`/schedules/edit/${event.id}/${dateString}`]);
+        this.toastrService.success("Task deleted successfully!", "Success");
       },
-      error: () => {
-        this.toastr.error("Error !!! Task not deleted", "Information");
+      error: (err) => {
+        this.toastrService.error("Task not deleted! retry or contact administrator",
+          "Error", {timeOut: 10000, closeButton: true});
+        console.error(err);
       },
+      complete: () => {
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate([`/schedules/overview/${format(this.day, 'dd-MM-yyyy')}`])
+            .catch((err) => console.error(err));
+        });
+      }
     });
   }
 
@@ -65,7 +71,9 @@ export class SchedulesOverviewComponent implements OnInit {
         this.tasks = data;
       },
       error: (error: Error) => {
-        console.log(error);
+        console.error(error);
+        this.toastrService.error("Task list cannot be loaded! reload page or contact administrator",
+          "Error", {timeOut: 10000, closeButton: true});
       }
     });
 
@@ -78,7 +86,8 @@ export class SchedulesOverviewComponent implements OnInit {
     let tomorrow: Date = new Date(this.day.getTime() + (24 * 60 * 60 * 1000));
     //const currentUrl = this.router.url;
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate([`/schedules/overview/${format(tomorrow, 'dd-MM-yyyy')}`]);
+      this.router.navigate([`/schedules/overview/${format(tomorrow, 'dd-MM-yyyy')}`])
+        .catch((err) => console.error(err));
     });
   }
 
@@ -87,8 +96,8 @@ export class SchedulesOverviewComponent implements OnInit {
 
     //const currentUrl = this.router.url;
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate([`/schedules/overview/${format(yesterday, 'dd-MM-yyyy')}`]);
+      this.router.navigate([`/schedules/overview/${format(yesterday, 'dd-MM-yyyy')}`])
+        .catch((err) => console.error(err));
     });
-
   }
 }
